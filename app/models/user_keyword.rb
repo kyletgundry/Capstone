@@ -1,0 +1,2 @@
+class UserKeyword < ApplicationRecord
+end

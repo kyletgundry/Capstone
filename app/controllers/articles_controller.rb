@@ -11,8 +11,4 @@ class ArticlesController < ApplicationController
     @news
     render "index.html.erb"
   end
-
-  def filter
-
-  end
 end

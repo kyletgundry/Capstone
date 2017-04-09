@@ -1,23 +1,43 @@
 <h2>Articles:</h2>
 
+<script language="JavaScript">
+function toggle(source) {
+  checkboxes = document.getElementsByName("sources[]");
+  for (var i = 0, n = checkboxes.length;i < n;i++) {
+  checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+
 <%= form_tag "/articles", method: :get do %>
-<input type="checkbox" name="sources[]" value="cnn">CNN
-<input type="checkbox" name="sources[]" value="buzzfeed">Buzzfeed
-<input type="checkbox" name="sources[]" value="espn">ESPN
-<input type="checkbox" name="sources[]" value="engadget">Engadget
-<input type="checkbox" name="sources[]" value="business-insider">Business-Insider
-<input type="checkbox" name="sources[]" value="breitbart-news">Breitbart-News
-<input type="checkbox" name="sources[]" value="bloomberg">Bloomberg
-<input type="checkbox" name="sources[]" value="bild">Bild
-<input type="checkbox" name="sources[]" value="bbc-sport">bbc-sport
-<input type="checkbox" name="sources[]" value="bbc-news">bbc-news
-<input type="checkbox" name="sources[]" value="associated-press">associated-press
-<input type="checkbox" name="sources[]" value="fox-sports">fox-sports
-<input type="checkbox" name="sources[]" value="fortune">fortune
-<input type="checkbox" name="sources[]" value="hacker-news">hacker-news
-<input type="checkbox" name="sources[]" value="mashable">mashable
+<div>
+  <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
+  <input type="checkbox" name="sources[]" value="cnn">CNN
+  <input type="checkbox" name="sources[]" value="buzzfeed">Buzzfeed
+  <input type="checkbox" name="sources[]" value="espn">ESPN
+  <input type="checkbox" name="sources[]" value="engadget">Engadget
+  <input type="checkbox" name="sources[]" value="business-insider">Business-Insider
+</div>
+<div>
+  <input type="checkbox" name="sources[]" value="breitbart-news">Breitbart-News
+  <input type="checkbox" name="sources[]" value="bloomberg">Bloomberg
+  <input type="checkbox" name="sources[]" value="bild">Bild
+  <input type="checkbox" name="sources[]" value="bbc-sport">bbc-sport
+  <input type="checkbox" name="sources[]" value="bbc-news">bbc-news
+</div>
+<div>
+  <input type="checkbox" name="sources[]" value="associated-press">associated-press
+  <input type="checkbox" name="sources[]" value="fox-sports">fox-sports
+  <input type="checkbox" name="sources[]" value="fortune">fortune
+  <input type="checkbox" name="sources[]" value="hacker-news">hacker-news
+  <input type="checkbox" name="sources[]" value="mashable">mashable
+</div>
+<p></p>
+<div>
 <input type="submit" value="Search">
+</div>
 <% end %>
+<p></p>
 
 <div class="row">
   <% @news.each do |source| %>
@@ -26,7 +46,8 @@
         <div class="col-md-4">
           <div class="well well-sm">
             <h3><a href="<%= article["url"] %>"><%= article["title"] %></a></h3>
-            <h6><%= source["source"] %></h6>
+            <h6 class="label label-default"><%= source["source"] %></h6>
+            <p></p>
             <% if article["urlToImage"] %>
               <img src="<%= article["urlToImage"] %>" alt="">
             <% else %>

@@ -1,0 +1,31 @@
+// Place all the styles related to the Articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#article_title {
+  color: black;
+}
+.well {
+  background-color: white;
+  border-radius: 0%;
+  max-height: 250px;
+  min-height: 310px;
+  overflow: scroll;
+}
+
+img {
+  /* Responsive images (ensure images don't scale beyond their parents) */
+
+  /* Part 1: Set a maxium relative to the parent */
+  max-width: 100%;
+
+  /* IE7-8 need help adjusting responsive images */
+  width: auto\9;
+
+  /* Part 2: Scale the height according to the width, otherwise you get stretching */
+  height: auto;
+
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}

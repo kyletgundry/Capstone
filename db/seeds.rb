@@ -14,7 +14,7 @@ sources.each do |source|
   )
   2.times do
     favorite = Favorite.create(
-    url: FAKER::Internet.url,
+    url: Faker::Internet.url,
     source_id: source.id
   )
   end
@@ -33,19 +33,19 @@ first_name.each do |name|
     email: "#{name}@gmail.com",
     phone_number: Faker::PhoneNumber.phone_number,
     password: "password"
-  )
+    )
   4.times do
     user_keyword = UserKeyword.create(
-      user_id = user.id,
-      keyword_id = keyword_instances.sample.id
+      user_id: user.id,
+      keyword_id: keyword_instances.sample.id
     )
     user_source = UserSource.create(
-      user_id = user.id,
-      source_id = source_instances.sample.id
+      user_id: user.id,
+      source_id: source_instances.sample.id
     )
     user_favorite = UserFavorite.create(
-      user_id = user.id,
-      favorite_id = favorite_instances.sample.id
+      user_id: user.id,
+      favorite_id: favorite_instances.sample.id
     )
   end
 end

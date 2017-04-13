@@ -10,12 +10,14 @@ class UsersController < ApplicationController
       last_name: params["last_name"],
       image: params["image"],
       email: params["email"],
-      phone_number: params["phone_number"]
+      phone_number: params["phone_number"],
+      password: params[:password],
+      password_confirmation: params[:password_confirmation]
       )
     if user.save
       session[:user_id] = user.id
       flash[:success] = 'Successfully created account!'
-      redirect_to "/"
+      redirect_to "/articles"
     else
       flash[:warning] = 'Invalid email or password!'
       redirect_to "/signup"

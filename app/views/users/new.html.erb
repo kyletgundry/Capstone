@@ -1,0 +1,29 @@
+<h1>Signup:</h1>
+
+<%= form_tag "/users", method: :post do %>
+  <div>
+    <label for="first_name">First Name:</label>
+    <input type="text" name="first_name">
+  </div>
+  <div>
+    <label for="last_name">Last Name:</label>
+    <input type="text" name="last_name">
+  </div>
+  <div>
+    <label for="image">Image:</label>
+    <input type="text" name="image">
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" name="email">
+  </div>
+  <div>
+    <label for="phone_number">Phone Number:</label>
+    <input type="text" name="phone_number">
+  </div>
+  <div>
+    <input type="submit" value="Sign Up">
+  </div>
+<% end %>
+
+

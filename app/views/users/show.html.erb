@@ -1,0 +1,28 @@
+<h1>Profile:</h1>
+
+<h3>Hey, <%= @user.first_name %>....</h3>
+
+<img src="<%= @user.image %>" alt="">
+
+<h4>Email: <%= @user.email %></h4>
+
+<p></p>
+
+<h3>Sources Saved:</h3>
+
+<% @user.sources.each do |source| %>
+<h4><%= source.source %></h4>
+<% end %>
+
+<h3>Favorite Articles Saved:</h3>
+
+<% @user.favorites.each do |favorite| %>
+<h4><%= favorite.url %></h4>
+<% end %>
+
+<h3>Keywords Saved:</h3>
+
+<% @user.keywords.each do |keyword| %>
+<h4><%= keyword.keyword %></h4>
+<% end %>
+

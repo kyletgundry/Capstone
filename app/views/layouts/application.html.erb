@@ -19,7 +19,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Fltr</a>
+          <a class="navbar-brand" href="/articles">Fltr</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,6 +49,7 @@
           <ul class="nav navbar-nav navbar-right">
             <% if current_user %>
               <li><a href="/logout">Sign Out</a></li>
+              <li><a href="/users/<%= current_user.id %>">Profile</a></li>
             <% else %>
               <li><a href="/signup">Sign Up</a></li>
               <li><a href="/login">Login</a></li>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "/articles" => "articles#index"
+  # post "/articles/:id" => "articles#update"
 
   get "/signup" => "users#new"
   post "/users" => "users#create"

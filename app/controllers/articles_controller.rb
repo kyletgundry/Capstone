@@ -9,10 +9,11 @@ class ArticlesController < ApplicationController
     @user = User.find_by(id: current_user.id)
     @news = []
     if current_user
-      @user.sources.each do |source|
-        result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
-        @news << result
-      end
+      @sources = @user.sources || @news_all
+        @sources.each do |source|
+          result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
+          @news << result
+        end
     else
       @sources = params["sources"] || @news_all
         @sources.each do |source|
@@ -25,6 +26,10 @@ class ArticlesController < ApplicationController
   end
 
   def update
-
+    @user = User.find_by(id: current_user.id)
+    @user.sources.update(
+    source: params[:sources]
+    )
+    @user.save
   end
 end

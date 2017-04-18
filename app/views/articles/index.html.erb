@@ -34,7 +34,11 @@ function toggle(source) {
 </div>
 <p></p>
 <div>
-<input type="submit" value="Search">
+<% if current_user %>
+  <input type="submit" value="Filter and Save">
+<% else %>
+  <input type="submit" value="Filter">
+<% end %>
 </div>
 <% end %>
 <p></p>

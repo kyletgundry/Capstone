@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get "/articles" => "articles#index"
-  post "/articles" => "articles#update"
+  patch "/articles" => "articles#update"
+
+  # resources :articles do
+  #   put :favorites, on: :users
+  # end
 
   get "/signup" => "users#new"
   post "/users" => "users#create"

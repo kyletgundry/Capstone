@@ -8,8 +8,8 @@ function toggle(source) {
   }
 }
 </script>
-<% if current_user %>
-  <%= form_tag "/articles", method: :post do %>
+
+  <%= form_tag "/articles", method: :get do %>
   <div>
     <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
     <input type="checkbox" name="sources[]" value="cnn">  CNN
@@ -40,7 +40,6 @@ function toggle(source) {
       <input type="submit" value="Filter">
     <% end %>
   </div>
-<% end %>
 <% end %>
 <p></p>
 

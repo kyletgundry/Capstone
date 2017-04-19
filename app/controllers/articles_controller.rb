@@ -6,9 +6,9 @@ class ArticlesController < ApplicationController
     sources.each do |source_all|
       @news_all << source_all[:source]
     end
-    @user = User.find_by(id: current_user.id)
     @news = []
     if current_user
+      @user = User.find_by(id: current_user.id)
       @sources = @user.sources || @news_all
         @sources.each do |source|
           result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
@@ -25,11 +25,12 @@ class ArticlesController < ApplicationController
     render "index.html.erb"
   end
 
-  def update
-    @user = User.find_by(id: current_user.id)
-    @user.sources.update(
-    source: params[:sources]
-    )
-    @user.save
-  end
+  # def update
+  #   @user = User.find_by(id: current_user.id)
+  #   @user.sources.update(
+  #   source: params[:sources]
+  #   )
+  #   @user.save
+  # end
+
 end

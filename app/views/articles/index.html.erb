@@ -49,6 +49,16 @@ function toggle(source) {
       <% source["articles"].each do |article| %>
         <div class="col-md-4">
           <div class="well well-sm">
+            <%# if current_user %>
+              <%#= link_to "favorite",   favorite_article_path(@article, type: "favorite"), method: :put %>
+              <%#= link_to "unfavorite", favorite_article_path(@article, type: "unfavorite"), method: :put %>
+              <%#= link_to "favorite", "/favorites", method: :post %>
+              <%= form_tag "/favorites", method: :post do %>
+                <input type="hidden" name="source_id" value="<%= @db_source.id %>">
+                <input type="hidden" name="url" value="<%= article["url"] %>">
+                <input type="submit" value="favorite">
+              <% end %>
+            <%# end %>
             <h3><a href="<%= article["url"] %>"><%= article["title"] %></a></h3>
             <h6 class="label label-default"><%= source["source"] %></h6>
             <p></p>

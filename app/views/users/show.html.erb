@@ -17,8 +17,12 @@
 <h3>Favorite Articles Saved:</h3>
 
 <% @user.favorites.each do |favorite| %>
-<h4><%= favorite.url %></h4>
+  <a href="<%= favorite.url %>"><%= favorite.url %></a>
+  <%= form_tag "/favorites/#{favorite.id}", method: :delete do %>
+    <input type="submit" value="Remove Favorite">
+  <% end %>
 <% end %>
+
 
 <h3>Keywords Saved:</h3>
 

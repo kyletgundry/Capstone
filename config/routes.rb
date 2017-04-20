@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   get "/articles" => "articles#index"
-  patch "/articles" => "articles#update"
-
   # resources :articles do
-  #   put :favorites, on: :users
+  #   put :favorite, on: :member
   # end
+  post "/favorites" => "favorites#create"
+  delete "/favorites/:id" => "favorites#destroy"
 
   get "/signup" => "users#new"
   post "/users" => "users#create"

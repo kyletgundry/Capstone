@@ -10,28 +10,18 @@ function toggle(source) {
 </script>
 
   <%= form_tag "/articles", method: :get do %>
-  <div>
-    <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
-    <input type="checkbox" name="sources[]" value="cnn">  CNN
-    <input type="checkbox" name="sources[]" value="buzzfeed">   Buzzfeed
-    <input type="checkbox" name="sources[]" value="espn">  ESPN
-    <input type="checkbox" name="sources[]" value="engadget">  Engadget
-    <input type="checkbox" name="sources[]" value="business-insider">  Business-Insider
-  </div>
-  <div>
-    <input type="checkbox" name="sources[]" value="breitbart-news">  Breitbart-News
-    <input type="checkbox" name="sources[]" value="bloomberg">  Bloomberg
-    <input type="checkbox" name="sources[]" value="bild">  Bild
-    <input type="checkbox" name="sources[]" value="bbc-sport">  bbc-sport
-    <input type="checkbox" name="sources[]" value="bbc-news">  bbc-news
-  </div>
-  <div>
-    <input type="checkbox" name="sources[]" value="associated-press">  associated-press
-    <input type="checkbox" name="sources[]" value="fox-sports">  fox-sports
-    <input type="checkbox" name="sources[]" value="fortune">  fortune
-    <input type="checkbox" name="sources[]" value="hacker-news">  hacker-news
-    <input type="checkbox" name="sources[]" value="mashable">  mashable
-  </div>
+  <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
+  <% @all_sources.each_slice(4) do |four_sources| %>
+    <div>
+      <% four_sources.each do |source| %>
+        <% if current_user %>
+          <input type="checkbox" name="sources[]" value="<%= source.id %>" <%= current_user && current_user.has_source_name?(source.source) ? "checked" : "" %> >  <%= source.source.split('-').join(' ').capitalize %>
+        <% else %>
+          <input type="checkbox" name="sources[]" value="<%= source.source %>" <%= current_user && current_user.has_source_name?(source.source) ? "checked" : "" %> >  <%= source.source.split('-').join(' ').capitalize %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
   <p></p>
   <div>
     <% if current_user %>
@@ -49,16 +39,13 @@ function toggle(source) {
       <% source["articles"].each do |article| %>
         <div class="col-md-4">
           <div class="well well-sm">
-            <%# if current_user %>
-              <%#= link_to "favorite",   favorite_article_path(@article, type: "favorite"), method: :put %>
-              <%#= link_to "unfavorite", favorite_article_path(@article, type: "unfavorite"), method: :put %>
-              <%#= link_to "favorite", "/favorites", method: :post %>
+            <% if current_user %>
               <%= form_tag "/favorites", method: :post do %>
                 <input type="hidden" name="source_id" value="<%= @db_source.id %>">
                 <input type="hidden" name="url" value="<%= article["url"] %>">
                 <input type="submit" value="favorite">
               <% end %>
-            <%# end %>
+            <% end %>
             <h3><a href="<%= article["url"] %>"><%= article["title"] %></a></h3>
             <h6 class="label label-default"><%= source["source"] %></h6>
             <p></p>

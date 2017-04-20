@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get "/articles" => "articles#index"
-  # resources :articles do
-  #   put :favorite, on: :member
-  # end
+
   post "/favorites" => "favorites#create"
   delete "/favorites/:id" => "favorites#destroy"
 

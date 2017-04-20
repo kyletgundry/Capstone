@@ -8,4 +8,8 @@ class User < ApplicationRecord
   has_many :user_favorites
   has_many :favorites, through: :user_favorites
 
+  def has_source_name?(input_name)
+    sources.map {|source| source.source }.include?(input_name)
+  end
+
 end

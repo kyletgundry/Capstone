@@ -7,7 +7,7 @@ class FavoritesController < ApplicationController
       )
     if favorite.save
       flash[:success] = 'Successfully favorited article!'
-      redirect_to "/articles"
+      redirect_to :back
     end
     user_favorite = UserFavorite.new(
       user_id: current_user.id,

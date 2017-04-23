@@ -9,53 +9,52 @@ class ArticlesController < ApplicationController
       end
     end
 
-    @news_all = []
-    @all_sources = Source.all.order(:source)
-    @all_sources.each do |source_all|
-      @news_all << source_all[:source]
+    if params[:search]
+      @articles = Source.where("title ILIKE ?", "%" + params[:search] + "%")
     end
+
+    @news_all = []        
+    @all_sources = Source.all.order(:source)  #places the array of hashes of all sources in the db = to variable @all_sources
+
+    @all_sources.each do |source_all| # runs through each source has within the array naming it source_all
+
+      @news_all << source_all[:source]  #shovels each source name into the array of @news_all to be used below as an or statement if no params are met.
+
+    end
+
     @news = []
     if current_user
-      @user = User.find_by(id: current_user.id)
-      user_sources = @user.sources || @news_all
-        user_sources.each do |source|
-          @db_source = Source.find_by(source: source.source)
-          result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
-          @news << result
+      @user = User.find_by(id: current_user.id)     # returns the user ID
+
+      user_sources = @user.sources || @news_all     # returns all sources associated with that user id (hash)
+
+         user_sources.each do |source|               # runs through each hash as "source"
+
+          @db_source = Source.find_by(source: source.source)        # finds the source in the db based by the source name (source.source) and stores it as @db_source for the favorite button to collect source.id
+
+          result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body   #api that runs through each source adding "source.source" (source name) to the api and stores it as variable result
+
+          @news << result     # every api source is then shuffled in to the @news array
         end
-    else
+          # @news.each do |source|
+          #   souce["articles"].each do |article|
+          #   if params[:search]
+          #     @articles = article.where("title ILIKE ?", "%" + params[:search] + "%")
+          #   end
+          # end
+      else
       @sources = params["sources"] || @news_all
         @sources.each do |source|
           @db_source = Source.find_by(source: source)
           result = Unirest.get("https://newsapi.org/v1/articles?source=#{source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
           @news << result
+          # if params[:search]
+          #   @articles = Source.where("title ILIKE ?", "%" + params[:search] + "%")
+          # end
         end
     end
     @news
     render "index.html.erb"
   end
-
-  # def favorite
-  #   type = params[:type]
-  #   if type == "favorite"
-  #     current_user.favorites << @article
-  #     redirect_to :back, notice: "You favorited!"
-
-  #   elsif type == "unfavorite"
-  #     current_user.favorites.delete(@article)
-  #     redirect_to :back, notice: "Unfavorited!"
-  #   else
-  #     redirect_to :back, notice: 'Nothing happened.'
-  #   end
-  # end
-
-  # def update
-  #   @user = User.find_by(id: current_user.id)
-  #   @user.sources.update(
-  #   source: params[:sources]
-  #   )
-  #   @user.save
-  # end
-
 end
 

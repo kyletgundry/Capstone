@@ -23,34 +23,36 @@ class ArticlesController < ApplicationController
     end
 
     @news = []
+    @articles = []
     if current_user
       @user = User.find_by(id: current_user.id)     # returns the user ID
 
       user_sources = @user.sources || @news_all     # returns all sources associated with that user id (hash)
 
-         user_sources.each do |source|               # runs through each hash as "source"
+      user_sources.each do |source|               # runs through each hash as "source"
 
-          @db_source = Source.find_by(source: source.source)        # finds the source in the db based by the source name (source.source) and stores it as @db_source for the favorite button to collect source.id
+        @db_source = Source.find_by(source: source.source)        # finds the source in the db based by the source name (source.source) and stores it as @db_source for the favorite button to collect source.id
 
-          result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body   #api that runs through each source adding "source.source" (source name) to the api and stores it as variable result
+        result = Unirest.get("https://newsapi.org/v1/articles?source=#{source.source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body   #api that runs through each source adding "source.source" (source name) to the api and stores it as variable result
 
-          @news << result     # every api source is then shuffled in to the @news array
+        @news << result     # every api source is then shuffled in to the @news array
+      end
+      @news.each do |source|
+        source["articles"].each do |article|
+          @articles << article
         end
-          # @news.each do |source|
-          #   souce["articles"].each do |article|
-          #   if params[:search]
-          #     @articles = article.where("title ILIKE ?", "%" + params[:search] + "%")
-          #   end
-          # end
+      end
       else
-      @sources = params["sources"] || @news_all
+        @sources = params["sources"] || @news_all
         @sources.each do |source|
           @db_source = Source.find_by(source: source)
           result = Unirest.get("https://newsapi.org/v1/articles?source=#{source}&sortBy=top&apiKey=01372794d65d437b88b19d238dab8f89").body
           @news << result
-          # if params[:search]
-          #   @articles = Source.where("title ILIKE ?", "%" + params[:search] + "%")
-          # end
+        end
+        @news.each do |source|
+          source["articles"].each do |article|
+            @articles << article
+          end
         end
     end
     @news

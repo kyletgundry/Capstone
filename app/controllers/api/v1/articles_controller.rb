@@ -8,7 +8,6 @@ class Api::V1::ArticlesController < ApplicationController
       @news_api_sources << result
     end
     @news_api_sources.each do |api_source|
-      # @articles << api_source["articles"]
       api_source["articles"].each do |article|
         article["source"] = api_source["source"]
         @articles << article

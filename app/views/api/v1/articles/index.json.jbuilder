@@ -6,7 +6,6 @@ json.array! @articles.each do |article|
   json.url article["url"]
   json.urlToImage article["urlToImage"]
   json.publishedAt article["publishedAt"]
-  
 end
 
 # json.array! @news_api_sources.each do |source|

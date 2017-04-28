@@ -1,67 +1,24 @@
-<h2>Articles:</h2>
-
-<script language="JavaScript">
-function toggle(source) {
-  checkboxes = document.getElementsByName("sources[]");
-  for (var i = 0, n = checkboxes.length;i < n;i++) {
-  checkboxes[i].checked = source.checked;
-  }
-}
-</script>
-
-  <%= form_tag "/articles", method: :get do %>
-  <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
-  <% @all_sources.each_slice(4) do |four_sources| %>
-    <div>
-      <% four_sources.each do |source| %>
-        <% if current_user %>
-          <input type="checkbox" name="sources[]" value="<%= source.id %>" <%= current_user && current_user.has_source_name?(source.source) ? "checked" : "" %> >  <%= source.source.split('-').join(' ').capitalize %>
-        <% else %>
-          <input type="checkbox" name="sources[]" value="<%= source.source %>" <%= current_user && current_user.has_source_name?(source.source) ? "checked" : "" %> >  <%= source.source.split('-').join(' ').capitalize %>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
-  <p></p>
-
-  
-  <div>
-    <% if current_user %>
-      <input type="submit" value="Filter and Save">
-    <% else %>
-      <input type="submit" value="Filter">
-    <% end %>
+<div class="articles">
+  <div v-for="source in sources">
+    {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources"> 
   </div>
-<% end %>
-<p></p>
 
-<div class="row">
-  <% @news.each do |source| %>
-    <% if source["articles"] %>
-      <% source["articles"].each do |article| %>
-        <div class="col-md-4">
-          <div class="well well-sm">
-            <% if current_user %>
-              <%= form_tag "/favorites", method: :post do %>
-                <input type="hidden" name="source_id" value="<%= @db_source.id %>">
-                <input type="hidden" name="url" value="<%= article["url"] %>">
-                <input type="submit" value="favorite">
-              <% end %>
-            <% end %>
-            <h3><a href="<%= article["url"] %>"><%= article["title"] %></a></h3>
-            <h6 class="label label-default"><%= source["source"] %></h6>
-            <p></p>
-            <% if article["urlToImage"] %>
-              <img class="article_images" src="<%= article["urlToImage"] %>" alt="">
-            <% else %>
-              <img src="http://www.jensenhughes.com/wp-content/uploads/2013/09/url.jpg" alt="">
-            <% end %>
+  <div class="row">
+    <div v-for="article in filteredArticles">
+      <div class="col-md-4">
+        <div class="well well-sm">
+          <div>
+            <button v-on:click="createFavorite(article.url)">Favorite</button>
           </div>
+              <p class="label label-default">{{ article.source }}</p>
+              <p><a v-bind:href="article.title">{{ article.title }}</a></p>
+              <p><img class="article_images" v-bind:src="article.urlToImage" alt=""></p>
+              <p>{{ article.author }}</p>
+              <p>{{ article.description }}</p>
+              <p>{{ article.url }}</p>
+              <p>{{ article.publishedAt }}</p>
         </div>
-      <% end %>
-    <% else %>
-      <h1>This is the source that is emplty: <%= source["source"] %></h1>
-    <% end %>
-  <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-

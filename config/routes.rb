@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   get "/articles" => "articles#index"
+  get "/articlesusingruby" => "articles#index"
+
 
   namespace :api do
     namespace :v1 do
       get "/articles" => "articles#index"
-      # post "/articles" => "articles#create"
-      # get "/articles/:id" => "articles#show"
-      # patch "/articles/:id" =>  "articles#update"
-      # delete "/articles/:id" => "articles#destroy"
+      
+      get "/favorites" => "favorites#index"
+      post "/favorites" => "favorites#create"
+
+      get "/sources" => "sources#index"
     end
   end
 

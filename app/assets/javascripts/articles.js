@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       articles: [],
       sources: [],
       newFavoriteURL: "",
-      sourceFilter: "",
+      newSourceFilter: "",
       checkedSources: []
     },
     computed: {
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           }).map(function(source) {
             return source.source;
           });
-          
+
       }.bind(this));
     },
     methods: {
@@ -48,7 +48,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $.post("/api/v1/favorites", params, function(responseData) {
           console.log("Data: ", responseData);
           this.favorites.push(responseData);
-        });
+        }.bind(this));
+      },
+      createSource: function(inputSource) {
+        this.newSourceFilter = inputSource;
+        var params = {source_id: this.newSourceFilter};
+        $.post("/api/v1/usersources", params, function(responseData) {
+          this.usersources.push(responseData);
+        }.bind(this));
       }
     }
   });

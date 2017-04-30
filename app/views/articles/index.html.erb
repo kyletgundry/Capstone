@@ -1,6 +1,6 @@
 <div class="articles">
   <div v-for="source in sources">
-    {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources"> 
+    {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
   </div>
 
   <div class="row">

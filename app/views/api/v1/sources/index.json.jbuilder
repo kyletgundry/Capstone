@@ -1,4 +1,5 @@
 json.array! @sources.each do |source|
+  json.id source["id"]
   json.source source["source"]
   # json.selected current_user.
   if current_user

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       post "/favorites" => "favorites#create"
 
       get "/sources" => "sources#index"
+
+      get "/usersources" => "user_sources#index"
+      post "/usersources" => "user_sources#create"
     end
   end
 

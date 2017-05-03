@@ -1,4 +1,4 @@
-/* global Vue, $ */
+/* global Vue, $, salvattore */
 document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: ".articles",
@@ -6,27 +6,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
       articles: [],
       sources: [],
       newFavoriteURL: "",
-      newSourceFilter: "",
+      articleTitleFilter: "",
+      newSource: "",
       checkedSources: []
     },
     computed: {
       filteredArticles: function() {
         return this.articles.filter(function(article) {
-          return this.checkedSources.indexOf(article.source) !== -1;
+          return this.checkedSources.indexOf(article.source) !== -1 && article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
         }.bind(this));
-      },
-      filteredSources: function() {
-        var sourceFilter = this.sourceFilter;
-        var filtered = this.sources.filter(function(source) {
-          var sourceName = source.source;
-          return sourceName.index(sourceFilter) !== 1;
-        });
-        return filtered;
       }
     },
     mounted: function() {
       $.get("api/v1/articles", function(responseData) {
         this.articles = responseData;
+        salvattore.recreateColumns(document.getElementById("fh5co-board"));
       }.bind(this));
       $.get("api/v1/sources", function(responseData) {
         this.sources = responseData;
@@ -51,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }.bind(this));
       },
       createSource: function(inputSource) {
-        this.newSourceFilter = inputSource;
-        var params = {source_id: this.newSourceFilter};
+        this.newSource = inputSource;
+        var params = {source_id: this.newSource};
         $.post("/api/v1/usersources", params, function(responseData) {
           this.usersources.push(responseData);
         }.bind(this));

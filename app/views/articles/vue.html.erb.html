@@ -1,0 +1,25 @@
+vue.html.erb
+
+
+
+
+  <div class="row">
+    <div v-for="article in filteredArticles">
+      <div class="col-md-4">
+        <div class="well well-sm">
+          <div>
+            <button v-on:click="createFavorite(article.url)">Favorite</button>
+          </div>
+              <p class="label label-default">{{ article.source }}</p>
+              <p><a v-bind:href="article.url">{{ article.title }}</a></p>
+              <p><img class="article_images" v-bind:src="article.urlToImage" alt=""></p>
+              <p>{{ article.author }}</p>
+              <p>{{ article.description }}</p>
+              <p>{{ article.url }}</p>
+              <p>{{ article.publishedAt }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  

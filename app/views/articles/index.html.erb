@@ -1,24 +1,56 @@
-<div class="articles">
-  <div v-for="source in sources">
-    {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
-  </div>
-
-  <div class="row">
-    <div v-for="article in filteredArticles">
-      <div class="col-md-4">
-        <div class="well well-sm">
-          <div>
-            <button v-on:click="createFavorite(article.url)">Favorite</button>
+  <div class="articles">
+    <div id="fh5co-offcanvass">
+        <a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
+      <% if current_user %>
+        <a href="/users/<%= current_user.id %>">Profile</a>
+        <br>
+        <br>
+        <a href="/logout">Sign Out</a>
+      <% else %>
+        <a href="/login">Login</a>
+        <br>
+        <br>
+        <a href="/signup">Sign Up</a>
+      <% end %>
+        <h1 class="fh5co-logo"><a class="navbar-brand" href="/">Fltr</a></h1>
+        <div v-for="source in sources">{{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"></div>
+    </div>
+    <header id="fh5co-header" role="banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Menu <i class="icon-menu"></i></a>
+            <a class="navbar-brand" href="/">Fltr</a>    
           </div>
-              <p class="label label-default">{{ article.source }}</p>
-              <p><a v-bind:href="article.title">{{ article.title }}</a></p>
-              <p><img class="article_images" v-bind:src="article.urlToImage" alt=""></p>
-              <p>{{ article.author }}</p>
-              <p>{{ article.description }}</p>
-              <p>{{ article.url }}</p>
-              <p>{{ article.publishedAt }}</p>
         </div>
       </div>
+    </header>
+
+    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p>
+<!--     <div v-for="source in sources">
+      {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
+    </div> -->
+
+    <div id="fh5co-main">
+        <div class="container">
+          <div class="row">
+              <div id="fh5co-board" data-columns>
+
+                <div class="item" v-for="article in filteredArticles">
+                  <div class="animate-box bounceIn animated">
+                    <a v-bind:href="article.url" class="image-popup fh5co-board-img"><img v-bind:src="article.urlToImage" alt=""></a>
+                    <div class="fh5co-desc">{{ article.title }}</div>
+
+                    <button class="btn btn-default btn-sm" v-on:click="createFavorite(article.url)" style="border:none;"><span class="glyphicon glyphicon-heart-empty"></span></button>
+                    <span style="font-size:10px; padding-left:50px;">{{ article.publishedAt }}</span>
+
+                  </div>
+                </div>
+
+
+              </div>
+          </div>
+        </div>
     </div>
   </div>
-</div>
+

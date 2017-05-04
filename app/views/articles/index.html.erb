@@ -1,4 +1,4 @@
-  <div class="articles">
+<div class="articles">
     <div id="fh5co-offcanvass">
         <a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
       <% if current_user %>
@@ -13,20 +13,29 @@
         <a href="/signup">Sign Up</a>
       <% end %>
         <h1 class="fh5co-logo"><a class="navbar-brand" href="/">Fltr</a></h1>
-        <div v-for="source in sources">{{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"></div>
+        <div v-for="source in sources">{{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source)"></div>
     </div>
     <header id="fh5co-header" role="banner">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Menu <i class="icon-menu"></i></a>
-            <a class="navbar-brand" href="/">Fltr</a>    
+            <div id="wrap">
+              <input id="search" name="search" type="text" placeholder="Filter" v-model="articleTitleFilter"><input id="search_submit" value="Rechercher" type="submit">
+            </div>
+            <a class="navbar-brand" href="/">Fltr</a>  
           </div>
         </div>
       </div>
     </header>
 
-    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p>
+
+
+
+ <!--    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->
+
+
+
 <!--     <div v-for="source in sources">
       {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
     </div> -->
@@ -39,10 +48,16 @@
                 <div class="item" v-for="article in filteredArticles">
                   <div class="animate-box bounceIn animated">
                     <a v-bind:href="article.url" class="image-popup fh5co-board-img"><img v-bind:src="article.urlToImage" alt=""></a>
+                    <div class="label label-default">{{article.source}}</div>
                     <div class="fh5co-desc">{{ article.title }}</div>
 
-                    <button class="btn btn-default btn-sm" v-on:click="createFavorite(article.url)" style="border:none;"><span class="glyphicon glyphicon-heart-empty"></span></button>
-                    <span style="font-size:10px; padding-left:50px;">{{ article.publishedAt }}</span>
+                    <button class="btn btn-default btn-sm" v-on:click="favorite(article)" style="border:none;">
+                    
+                    <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
+                    <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
+
+                    </button>
+                    <span style="font-size:10px; padding-left:10px;">{{ article.publishedAt }}</span>
 
                   </div>
                 </div>

@@ -10,11 +10,15 @@ Rails.application.routes.draw do
       
       get "/favorites" => "favorites#index"
       post "/favorites" => "favorites#create"
+      post "/favorites/delete" => "favorites#destroy"
 
       get "/sources" => "sources#index"
 
       get "/usersources" => "user_sources#index"
       post "/usersources" => "user_sources#create"
+      post "/usersources/delete" => "user_sources#destroy"
+
+      get "/userfavorites" => "userfavorites#index"
     end
   end
 

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       articles: [],
       sources: [],
       newFavoriteURL: "",
+      toggleFavorite: false,
       articleTitleFilter: "",
       newSource: "",
       checkedSources: []
@@ -36,20 +37,51 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }.bind(this));
     },
     methods: {
-      createFavorite: function(inputArticle) {
-        this.newFavoriteURL = inputArticle;
-        var params = {url: this.newFavoriteURL};
-        $.post("/api/v1/favorites", params, function(responseData) {
-          console.log("Data: ", responseData);
-          this.favorites.push(responseData);
-        }.bind(this));
+      favorite: function(inputArticle) {
+        inputArticle.favorited = !inputArticle.favorited;
+        // console.log("Input Favorite: ", inputFavorite);
+        // var toggleFavorite = false;
+        // var favoriteArticle = inputFavorite;
+        // var params = {url: favoriteArticle.url};
+        // console.log("Favorite Article URL: ", params);
+        // if (toggleFavorite === false) {
+        //   $.post("/api/v1/favorites", params, function(responseData) {
+        //     this.favorites.push(responseData);
+        //   }.bind(this));
+        // } else {
+        //   $.post("/api/v1/userfavorites", params, function(responseData) {
+        //     this.favorites.push(responseData);
+        //   });
+        //   toggleFavorite = !toggleFavorite;
+        // }
+
+      // createFavorite: function(inputArticle) {
+      //   this.newFavoriteURL = inputArticle;
+      //   var params = {url: this.newFavoriteURL};
+      //   $.post("/api/v1/favorites", params, function(responseData) {
+      //     console.log("Data: ", responseData);
+      //     this.favorites.push(responseData);
+      //   }.bind(this));
       },
-      createSource: function(inputSource) {
-        this.newSource = inputSource;
-        var params = {source_id: this.newSource};
-        $.post("/api/v1/usersources", params, function(responseData) {
-          this.usersources.push(responseData);
-        }.bind(this));
+      // createSource: function(inputSource) {
+      //   this.newSource = inputSource;
+      //   var params = {source_id: this.newSource};
+      //   $.post("/api/v1/usersources", params, function(responseData) {
+      //     this.usersources.push(responseData);
+      //   }.bind(this));
+      // }
+      createSource: function(inputSource) { 
+        console.log("InputSource: ", inputSource);
+        var checkedSource = inputSource;
+        var params = {source_id: checkedSource.id};
+        if (checkedSource.selected === false) {
+          $.post("/api/v1/usersources", params, function(responseData) {
+            this.usersources.push(responseData);
+          }.bind(this));
+        } else {
+          $.post("/api/v1/usersources/delete", params, function(responseData) {
+          });
+        }
       }
     }
   });

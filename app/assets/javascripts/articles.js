@@ -37,23 +37,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }.bind(this));
     },
     methods: {
-      favorite: function(inputArticle) {
+      toggleFavorited: function(inputArticle) {
         inputArticle.favorited = !inputArticle.favorited;
-        // console.log("Input Favorite: ", inputFavorite);
-        // var toggleFavorite = false;
-        // var favoriteArticle = inputFavorite;
-        // var params = {url: favoriteArticle.url};
-        // console.log("Favorite Article URL: ", params);
-        // if (toggleFavorite === false) {
-        //   $.post("/api/v1/favorites", params, function(responseData) {
-        //     this.favorites.push(responseData);
-        //   }.bind(this));
-        // } else {
-        //   $.post("/api/v1/userfavorites", params, function(responseData) {
-        //     this.favorites.push(responseData);
-        //   });
-        //   toggleFavorite = !toggleFavorite;
-        // }
+        console.log("Input Favorite: ", inputArticle);
+        var params = {url: inputArticle.url};
+        console.log("Favorite Article URL: ", params);
+        if (inputArticle.favorited) {
+          $.post("/api/v1/favorites", params, function(responseData) {
+            this.favorites.push(responseData);
+          }.bind(this));
+        } else {
+          $.post("/api/v1/favorites/delete", params, function(responseData) {
+            this.favorites.push(responseData);
+          });
+        }
 
       // createFavorite: function(inputArticle) {
       //   this.newFavoriteURL = inputArticle;

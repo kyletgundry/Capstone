@@ -23,8 +23,7 @@ class Api::V1::FavoritesController < ApplicationController
   def destroy
     user = current_user
     params_favorite = params["url"]
-    @favorite = UserFavorite.where(url: params[:url], user_id: current_user.id)
+    @favorite = Favorite.find_by(url: params[:url], user_id: current_user.id)
     @favorite.destroy
   end
-
 end

@@ -19,6 +19,9 @@ Rails.application.routes.draw do
       post "/usersources/delete" => "user_sources#destroy"
 
       get "/userfavorites" => "userfavorites#index"
+
+      get "/keywords" => "keywords#index"
+      
     end
   end
 

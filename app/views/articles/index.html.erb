@@ -1,5 +1,5 @@
 <div class="articles">
-    <div id="fh5co-offcanvass">
+    <div id="fh5co-offcanvass" style="overflow: scroll;">
         <a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
       <% if current_user %>
         <a href="/users/<%= current_user.id %>">Profile</a>
@@ -30,15 +30,12 @@
     </header>
 
 
-
-
  <!--    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->
-
-
 
 <!--     <div v-for="source in sources">
       {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
     </div> -->
+
 
     <div id="fh5co-main">
         <div class="container">
@@ -53,8 +50,8 @@
 
                     <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;">
                     
-                    <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
-                    <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
+                      <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
+                      <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
 
                     </button>
                     <span style="font-size:10px; padding-left:10px;">{{ article.publishedAt }}</span>

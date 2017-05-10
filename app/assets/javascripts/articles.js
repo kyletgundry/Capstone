@@ -9,12 +9,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
       toggleFavorite: false,
       articleTitleFilter: "",
       newSource: "",
-      checkedSources: []
+      checkedSources: [],
+      keywords: [],
+      userKeywords: []
     },
     computed: {
       filteredArticles: function() {
         return this.articles.filter(function(article) {
-          return this.checkedSources.indexOf(article.source) !== -1 && article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
+          // return this.checkedSources.indexOf(article.source) !== -1 && 
+          // article.title.toLowerCase().indexOf(this.userKeywords.toLowerCase()) === -1 && 
+          // article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
+          var isValidSource = this.checkedSources.indexOf(article.source) !== -1;
+          var isValidArticle = true;
+          for (var i = 0; i < this.userKeywords.length; i++) {
+            if (article.title.toLowerCase().indexOf(this.userKeywords[i].toLowerCase()) !== -1) {
+              isValidArticle = false;
+            }
+          }
+          var isValidSearch = article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
+          return isValidSource && isValidArticle && isValidSearch;
         }.bind(this));
       }
     },
@@ -26,14 +39,25 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get("api/v1/sources", function(responseData) {
         this.sources = responseData;
         // this.checkedSources = ["cnn", "engadget", "fortune"];
-
         this.checkedSources = this.sources
           .filter(function(source) {
             return source.selected;
-          }).map(function(source) {
+          })
+          .map(function(source) {
             return source.source;
           });
-
+      }.bind(this));
+      $.get("api/v1/keywords", function(responseData) {
+        this.keywords = responseData;
+        console.log(this.keywords);
+        this.userKeywords = this.keywords
+        .filter(function(keyword) {
+          return keyword.user_keyword;
+        })
+        .map(function(keyword) {
+          return keyword.keyword;
+        });
+        console.log('here are the keywords', this.userKeywords);
       }.bind(this));
     },
     methods: {
@@ -51,22 +75,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             this.favorites.push(responseData);
           });
         }
-
-      // createFavorite: function(inputArticle) {
-      //   this.newFavoriteURL = inputArticle;
-      //   var params = {url: this.newFavoriteURL};
-      //   $.post("/api/v1/favorites", params, function(responseData) {
-      //     console.log("Data: ", responseData);
-      //     this.favorites.push(responseData);
-      //   }.bind(this));
       },
-      // createSource: function(inputSource) {
-      //   this.newSource = inputSource;
-      //   var params = {source_id: this.newSource};
-      //   $.post("/api/v1/usersources", params, function(responseData) {
-      //     this.usersources.push(responseData);
-      //   }.bind(this));
-      // }
       createSource: function(inputSource) { 
         console.log("InputSource: ", inputSource);
         var checkedSource = inputSource;

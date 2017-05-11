@@ -49,12 +49,14 @@
                     <div class="label label-default">{{article.source}}</div>
                     <div class="fh5co-desc">{{ article.title }}</div>
 
-                    <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;">
-                    
-                      <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
-                      <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
+                    <% if current_user %>
+                      <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;">
+                      
+                        <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
+                        <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
 
-                    </button>
+                      </button>
+                    <% end %>
                     <span style="font-size:10px; padding-left:10px;">{{ article.publishedAt }}</span>
 
                   </div>

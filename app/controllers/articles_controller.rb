@@ -47,5 +47,15 @@ class ArticlesController < ApplicationController
     gon.current_user = current_user
     render "index.html.erb"
   end
+  
+  def create
+    @keyword = Keyword.new(
+      keyword: params["keyword"],
+      user_id: current_user.id
+    )
+    @keyword.save
+    redirect_to "/"
+  end
+
 end
 

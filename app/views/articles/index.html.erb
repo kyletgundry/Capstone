@@ -31,8 +31,12 @@
     </div>
 
 <% if current_user %>
-  <span><input type="text" v-model="newKeyword" placeholder="Remove articles...">
-  <button v-on:click="createKeyword()">Remove</button></span>
+  <%= form_tag "/articles/keyword/create", method: :post do %>
+    <span>
+    <input type="text" placeholder="Remove articles..." name="keyword">
+    <input type="submit" value="Remove">
+    </span>
+  <% end %>
 <% end %>
 
  <!--    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->

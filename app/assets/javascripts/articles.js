@@ -1,4 +1,4 @@
-/* global Vue, $, salvattore */
+/* global Vue, $, salvattore, gon */
 document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: ".articles",
@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $.post("/api/v1/keywords", params, function(responseData) {
           console.log(responseData);
           this.keywords.push(responseData);
+          this.keywords.$forceUpdate();
           this.newKeyword = "";
         }.bind(this));
       }

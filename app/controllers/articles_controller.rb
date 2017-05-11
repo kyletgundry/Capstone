@@ -44,6 +44,7 @@ class ArticlesController < ApplicationController
     #     end
     # end
     # @news
+    gon.current_user = current_user
     render "index.html.erb"
   end
 end

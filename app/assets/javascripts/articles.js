@@ -11,14 +11,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
       newSource: "",
       checkedSources: [],
       keywords: [],
-      userKeywords: []
+      userKeywords: [],
+      currentUser: gon.current_user
     },
     computed: {
       filteredArticles: function() {
         return this.articles.filter(function(article) {
-          // return this.checkedSources.indexOf(article.source) !== -1 && 
-          // article.title.toLowerCase().indexOf(this.userKeywords.toLowerCase()) === -1 && 
-          // article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
           var isValidSource = this.checkedSources.indexOf(article.source) !== -1;
           var isValidArticle = true;
           for (var i = 0; i < this.userKeywords.length; i++) {
@@ -32,33 +30,47 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     },
     mounted: function() {
+      // var currentUser = gon.current_user;
+      console.log("info:", gon.current_user);
+      
       $.get("api/v1/articles", function(responseData) {
         this.articles = responseData;
         salvattore.recreateColumns(document.getElementById("fh5co-board"));
       }.bind(this));
+      
       $.get("api/v1/sources", function(responseData) {
         this.sources = responseData;
         // this.checkedSources = ["cnn", "engadget", "fortune"];
-        this.checkedSources = this.sources
-          .filter(function(source) {
-            return source.selected;
-          })
+        if (gon.current_user) {
+          this.checkedSources = this.sources
+            .filter(function(source) {
+              return source.selected;
+            })
+            .map(function(source) {
+              return source.source;
+            });
+        } else {
+          this.checkedSources = this.sources
           .map(function(source) {
             return source.source;
           });
+        }
       }.bind(this));
-      $.get("api/v1/keywords", function(responseData) {
-        this.keywords = responseData;
-        console.log(this.keywords);
-        this.userKeywords = this.keywords
-        .filter(function(keyword) {
-          return keyword.user_keyword;
-        })
-        .map(function(keyword) {
-          return keyword.keyword;
-        });
-        console.log('here are the keywords', this.userKeywords);
-      }.bind(this));
+      
+      if (gon.current_user) {
+        $.get("api/v1/keywords", function(responseData) {
+          this.keywords = responseData;
+          console.log(this.keywords);
+          this.userKeywords = this.keywords
+          .filter(function(keyword) {
+            return keyword.user_keyword;
+          })
+          .map(function(keyword) {
+            return keyword.keyword;
+          });
+          console.log('here are the keywords', this.userKeywords);
+        }.bind(this));
+      }
     },
     methods: {
       toggleFavorited: function(inputArticle) {

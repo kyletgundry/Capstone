@@ -6,7 +6,9 @@ json.array! @articles.each do |article|
   json.url article["url"]
   json.urlToImage article["urlToImage"]
   json.publishedAt article["publishedAt"]
-  json.favorited current_user.favorites.map {|favorite| favorite.url}.include? article["url"]
+  if current_user
+    json.favorited current_user.favorites.map {|favorite| favorite.url}.include? article["url"]
+  end
 end
 
 # json.array! @news_api_sources.each do |source|

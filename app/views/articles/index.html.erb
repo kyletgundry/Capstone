@@ -15,7 +15,7 @@
         <h1 class="fh5co-logo"><a class="navbar-brand" href="/">Fltr</a></h1>
         <div v-for="source in sources">{{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source)"></div>
     </div>
-    <header id="fh5co-header" role="banner">
+    <div id="fh5co-header" role="banner">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-    </header>
+    </div>
 
 
  <!--    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->

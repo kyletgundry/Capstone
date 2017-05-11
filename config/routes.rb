@@ -21,7 +21,9 @@ Rails.application.routes.draw do
       get "/userfavorites" => "userfavorites#index"
 
       get "/keywords" => "keywords#index"
-      
+      post "/keywords" => "keywords#create"
+      post "/keywords/delete" => "keywords#destroy"
+
     end
   end
 

@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       checkedSources: [],
       keywords: [],
       userKeywords: [],
-      currentUser: gon.current_user
+      currentUser: gon.current_user,
+      newKeyword: ""
     },
     computed: {
       filteredArticles: function() {
@@ -100,6 +101,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
           $.post("/api/v1/usersources/delete", params, function(responseData) {
           });
         }
+      },
+      createKeyword: function() { 
+        var params = {keyword: this.newKeyword};
+        console.log("keyword: ", params);
+        $.post("/api/v1/keywords", params, function(responseData) {
+          console.log(responseData);
+          this.keywords.push(responseData);
+          this.newKeyword = "";
+        }.bind(this));
       }
     }
   });

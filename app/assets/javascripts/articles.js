@@ -101,17 +101,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
           $.post("/api/v1/usersources/delete", params, function(responseData) {
           });
         }
-      },
-      createKeyword: function() { 
-        var params = {keyword: this.newKeyword};
-        console.log("keyword: ", params);
-        $.post("/api/v1/keywords", params, function(responseData) {
-          console.log(responseData);
-          this.keywords.push(responseData);
-          this.keywords.$forceUpdate();
-          this.newKeyword = "";
-        }.bind(this));
       }
+      // createKeyword: function() { 
+      //   var params = {keyword: this.newKeyword};
+      //   console.log("keyword: ", params);
+      //   $.post("/api/v1/keywords", params, function(responseData) {
+      //     console.log(responseData);
+      //     this.keywords.push(responseData);
+      //     this.keywords.$forceUpdate();
+      //     this.newKeyword = "";
+      //   }.bind(this));
+      // }
     }
   });
 });

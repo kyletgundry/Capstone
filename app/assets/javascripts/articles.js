@@ -101,6 +101,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
           $.post("/api/v1/usersources/delete", params, function(responseData) {
           });
         }
+      },
+      moment: function(date) {
+        return moment(date).format('MMMM Do YYYY, h:mm a');
       }
       // createKeyword: function() { 
       //   var params = {keyword: this.newKeyword};

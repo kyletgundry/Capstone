@@ -30,18 +30,31 @@
       </div>
     </div>
 
+
+<!--     <h3>I want to view articles from </h3>
+      <div class="form-group">
+        <div class="col-md-4">
+            <select id="dates-field2" class="multiselect-ui form-control" multiple="multiple">
+                <option v-for="source in sources">{{ source.source }}</option>
+            </select>
+        </div>
+      </div> -->
+
 <% if current_user %>
   <%= form_tag "/articles/keyword/create", method: :post do %>
-    <span>
     <input type="text" placeholder="Remove articles..." name="keyword">
     <input type="submit" value="Remove">
-    </span>
   <% end %>
 <% end %>
+Total articles removed: {{ removedArticles.length }}
 
- <!--    <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->
+<button v-on:click="setSortAttribute('title')">Order by Title</button>
+<button v-on:click="setSortAttribute('source')">Order by Source</button>
 
-<!--     <div v-for="source in sources">
+<!--     <p>Filter Articles: <input type="text" v-model="articleTitleFilter"></p> -->
+
+<!--     list of sources displayed with checkboxes:
+    <div v-for="source in sources">
       {{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source.id)"> 
     </div> -->
 

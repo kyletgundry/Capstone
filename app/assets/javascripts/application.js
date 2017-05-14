@@ -16,3 +16,4 @@
 //= require vue
 //= require moment
 //= require_tree .
+//= require bootstrap-multiselect

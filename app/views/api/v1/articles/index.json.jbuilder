@@ -9,6 +9,11 @@ json.array! @articles.each do |article|
   if current_user
     json.favorited current_user.favorites.map {|favorite| favorite.url}.include? article["url"]
   end
+  # if current_user
+  #   title = article["title"].downcase
+  #   p title
+  #   json.invalidArticle current_user.keywords.map {|keyword|keyword.keyword.downcase()}.include? title
+  # end
 end
 
 # json.array! @news_api_sources.each do |source|

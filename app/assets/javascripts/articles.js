@@ -1,4 +1,4 @@
-/* global Vue, $, salvattore, gon */
+/* global Vue, $, salvattore, gon, moment */
 document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: ".articles",
@@ -13,21 +13,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
       keywords: [],
       userKeywords: [],
       currentUser: gon.current_user,
-      newKeyword: ""
+      newKeyword: "",
+      removedArticles: [],
+      sortAttribute: "title",
+      sortAscending: true
     },
     computed: {
       filteredArticles: function() {
-        return this.articles.filter(function(article) {
+        var testRun =  this.articles.filter(function(article) {
           var isValidSource = this.checkedSources.indexOf(article.source) !== -1;
           var isValidArticle = true;
+
           for (var i = 0; i < this.userKeywords.length; i++) {
             if (article.title.toLowerCase().indexOf(this.userKeywords[i].toLowerCase()) !== -1) {
               isValidArticle = false;
+              // var removedArticles = !isValidArticle;
+              // console.log(removedArticles);
+              // this.removedArticles.push(article);
             }
           }
+          if (isValidArticle === false) {
+            this.removedArticles.push(article);
+          // console.log(this.removedArticles);
+          }
           var isValidSearch = article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
+
           return isValidSource && isValidArticle && isValidSearch;
         }.bind(this));
+        
+        var sorted = testRun.sort(function(article1, article2) {
+          if (this.sortAscending) {
+            return article1[this.sortAttribute].localeCompare(article2[this.sortAttribute]);
+          } else {
+            return article2[this.sortAttribute].localeCompare(article1[this.sortAttribute]);
+          }
+        }.bind(this));
+        return sorted;
       }
     },
     mounted: function() {
@@ -104,7 +125,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
       moment: function(date) {
         return moment(date).format('MMMM Do YYYY, h:mm a');
+      },
+      setSortAttribute: function(inputAttribute) {
+        if (inputAttribute === this.sortAttribute) {
+          this.sortAscending = !this.sortAscending;
+        } else {
+          this.sortAscending = true;
+        }
+        this.sortAttribute = inputAttribute;
       }
+
       // createKeyword: function() { 
       //   var params = {keyword: this.newKeyword};
       //   console.log("keyword: ", params);

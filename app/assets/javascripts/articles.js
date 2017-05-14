@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     },
     computed: {
       filteredArticles: function() {
+        this.removedArticles = [];
         var testRun =  this.articles.filter(function(article) {
           var isValidSource = this.checkedSources.indexOf(article.source) !== -1;
           var isValidArticle = true;
@@ -27,14 +28,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
           for (var i = 0; i < this.userKeywords.length; i++) {
             if (article.title.toLowerCase().indexOf(this.userKeywords[i].toLowerCase()) !== -1) {
               isValidArticle = false;
-              // var removedArticles = !isValidArticle;
-              // console.log(removedArticles);
-              // this.removedArticles.push(article);
+              this.removedArticles.push(article);
             }
-          }
-          if (isValidArticle === false) {
-            this.removedArticles.push(article);
-          // console.log(this.removedArticles);
           }
           var isValidSearch = article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
 

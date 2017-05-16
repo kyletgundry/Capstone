@@ -33,10 +33,11 @@
 <h3>Keywords Saved:</h3>
 
 <% @user.keywords.each do |keyword| %>
-<h4><%= keyword.keyword %></h4>
+<span>
+  <h5><%= keyword.keyword %></h5>
+<%= form_tag "/keywords/#{keyword.id}", method: :delete do %>
+    <input class="deletebutton" type="submit" value="X">
+  <% end %>
 <% end %>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+</span>
+

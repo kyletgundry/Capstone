@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   post "/favorites" => "favorites#create"
   delete "/favorites/:id" => "favorites#destroy"
 
+  delete "/keywords/:id" => "keywords#destroy"
+
   get "/signup" => "users#new"
   post "/users" => "users#create"
   get "/login" => "sessions#new"

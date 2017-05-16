@@ -15,28 +15,34 @@ document.addEventListener("DOMContentLoaded", function(event) {
       currentUser: gon.current_user,
       newKeyword: "",
       removedArticles: [],
+      totalArticles: [],
       sortAttribute: "title",
+      totalArticles: [],
       sortAscending: true
     },
     computed: {
       filteredArticles: function() {
         this.removedArticles = [];
-        var testRun =  this.articles.filter(function(article) {
+        var displayedArticles =  this.articles.filter(function(article) {
           var isValidSource = this.checkedSources.indexOf(article.source) !== -1;
+          
           var isValidArticle = true;
-
           for (var i = 0; i < this.userKeywords.length; i++) {
             if (article.title.toLowerCase().indexOf(this.userKeywords[i].toLowerCase()) !== -1) {
               isValidArticle = false;
               this.removedArticles.push(article);
             }
           }
-          var isValidSearch = article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
 
+          var isValidSearch = article.title.toLowerCase().indexOf(this.articleTitleFilter.toLowerCase()) !== -1;
           return isValidSource && isValidArticle && isValidSearch;
+
         }.bind(this));
+
+        console.log("Articles displaying: ", displayedArticles.length);
+        this.totalArticles = displayedArticles;
         
-        var sorted = testRun.sort(function(article1, article2) {
+        var sorted = displayedArticles.sort(function(article1, article2) {
           if (this.sortAscending) {
             return article1[this.sortAttribute].localeCompare(article2[this.sortAttribute]);
           } else {

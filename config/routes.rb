@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post "/twilios" => "twilios#send_article"
+  
   post "/favorites" => "favorites#create"
   delete "/favorites/:id" => "favorites#destroy"
 

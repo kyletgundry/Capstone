@@ -41,7 +41,7 @@
 <input style="float:left;margin-left: 100px;padding-left: 50px;padding-right: 50px;" id="search" name="search" type="text" placeholder="Find Articles with title..." v-model="articleTitleFilter">
 
 <% if current_user %>
-  <h6 style="text-align: right;">Total articles showing: {{ totalArticles.length }}</h6>
+  <h6 style="text-align: right;">Total articles showing: {{ totalNumberArticles.length }}</h6>
   <h6 style="text-align: right;">Total articles removed: {{ removedArticles.length }}</h6>
 <% end %>
 
@@ -63,6 +63,10 @@
                         <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
 
                       </button>
+
+                        <input type="text" v-model="article.phoneNumber">
+                        <input v-on:click="sendText(article)" type="submit" value="Send">
+
                     <% end %>
 
                     <span style="font-size:10px; padding-left:10px;">{{ moment(article.publishedAt) }}</span>

@@ -1,4 +1,5 @@
 /* global Vue, $, salvattore, gon, moment */
+/* eslint camelcase: 0 */
 document.addEventListener("DOMContentLoaded", function(event) {
   var app = new Vue({
     el: ".articles",
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       removedArticles: [],
       totalArticles: [],
       sortAttribute: "title",
-      totalArticles: [],
+      totalNumberArticles: [],
       sortAscending: true
     },
     computed: {
@@ -40,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }.bind(this));
 
         console.log("Articles displaying: ", displayedArticles.length);
-        this.totalArticles = displayedArticles;
+        this.totalNumberArticles = displayedArticles;
         
         var sorted = displayedArticles.sort(function(article1, article2) {
           if (this.sortAscending) {
@@ -134,6 +135,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.sortAscending = true;
         }
         this.sortAttribute = inputAttribute;
+      },
+      sendText: function(inputArticle) {
+        var params = { phone_number: inputArticle.phoneNumber, article_url: inputArticle.url };
+        $.post("/twilios", params, function(responseData) {
+          article.phoneNumber = "";
+        });
       }
 
       // createKeyword: function() { 

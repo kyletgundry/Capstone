@@ -1,0 +1,61 @@
+<div class="articles">
+
+    <div id="fh5co-main">
+        <div class="container">
+          <div class="row">
+              <div id="fh5co-board" data-columns>
+
+                <div class="item" v-for="article in removedArticles">
+                  <div class="animate-box bounceIn animated">
+                    
+                      <a v-bind:href="article.url" class="image-popup fh5co-board-img"><img v-bind:src="article.urlToImage" alt=""></a>
+                    
+                    <div class="label label-default" style="align-items: left;">{{article.source}}</div>
+
+
+                    <% if current_user %>
+                      <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;float:left;margin-left:0px;">
+                      
+                        <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
+                        <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
+
+                      </button>
+                    <% end %>
+
+                    <span style="font-size:10px; margin-left:10px;text-align: right;">{{ moment(article.publishedAt) }}</span>
+                    <div class="fh5co-desc">{{ article.title }}</div>
+                    
+
+                    <!-- Social Sharing  -->
+                    
+                    <!-- Facebook -->
+                    <a v-bind:href='"http://www.facebook.com/sharer.php?u=" + article.url' target=""><img style="width:15px; height:15px;float:left;margin-left: 10px;margin-bottom:10px;" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+                    
+                    <!-- Twitter -->
+                    <a v-bind:href='"https://twitter.com/share?url=" + article.url + "&amp;text=" + article.title + "&amp;hashtags=fltr"' target="_blank"><img  style="width:15px;height:15px;float:left;margin-left: 5px;margin-bottom:10px;" src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
+
+
+                    <!-- modal -->
+                      
+                      <button class="glyphicon glyphicon-phone" v-on:click="showPhoneField(article)" style="border:none;float:right;background:white;"></button>
+                        <div v-if="article.phoneNumberField">
+                        <input style="float:right;margin-right: 15px;margin-bottom: 10px;" v-on:click="sendText(article)" type="submit" value="Send">
+                        <input style="width: 100px;float:right;margin-bottom: 10px;" type="text" v-model="article.phoneNumber">
+                        </div>
+
+
+                      <!-- <div>
+                        <input type="text" v-model="article.phoneNumber">
+                        <input v-on:click="sendText(article)" type="submit" value="Send">
+                      </div> -->
+
+
+                  </div>
+                </div>
+
+
+              </div>
+          </div>
+        </div>
+    </div>
+</div>

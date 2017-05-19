@@ -57,5 +57,10 @@ class ArticlesController < ApplicationController
     redirect_to "/"
   end
 
+  def removed
+    @user = User.find_by(id: params[:id])
+    render "removed.html.erb"
+  end
+
 end
 

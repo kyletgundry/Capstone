@@ -1,6 +1,10 @@
 /* global Vue, $, salvattore, gon, moment */
 /* eslint camelcase: 0 */
 document.addEventListener("DOMContentLoaded", function(event) {
+  Vue.component('modal', {
+    template: '#modal-template'
+  });
+
   var app = new Vue({
     el: ".articles",
     data: {
@@ -19,7 +23,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       totalArticles: [],
       sortAttribute: "title",
       totalNumberArticles: [],
-      sortAscending: true
+      sortAscending: true,
+      showRemovedList: true,
+      showModal: false
     },
     computed: {
       filteredArticles: function() {
@@ -39,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           return isValidSource && isValidArticle && isValidSearch;
 
         }.bind(this));
-
+        console.log("Articles Removed", this.removedArticles);
         console.log("Articles displaying: ", displayedArticles.length);
         this.totalNumberArticles = displayedArticles;
         
@@ -59,6 +65,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       
       $.get("api/v1/articles", function(responseData) {
         this.articles = responseData;
+        this.articles.map(function(article) {
+          article.phoneNumberField = false;
+        });
         salvattore.recreateColumns(document.getElementById("fh5co-board"));
       }.bind(this));
       
@@ -139,8 +148,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       sendText: function(inputArticle) {
         var params = { phone_number: inputArticle.phoneNumber, article_url: inputArticle.url };
         $.post("/twilios", params, function(responseData) {
-          article.phoneNumber = "";
         });
+        this.article.phoneNumber = "";
+      },
+      showPhoneField: function(article) {
+        article.phoneNumberField = !article.phoneNumberField;
+        this.$forceUpdate();
+        console.log(article.phoneNumberField);
       }
 
       // createKeyword: function() { 

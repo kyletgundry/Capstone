@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "/" => "articles#index"
   get "/articles" => "articles#index"
   post "/articles/keyword/create" => "articles#create"
+  get "/articles/:id/removed" => "articles#removed"
 
 
   namespace :api do
@@ -28,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   post "/twilios" => "twilios#send_article"
-  
+
   post "/favorites" => "favorites#create"
   delete "/favorites/:id" => "favorites#destroy"
 

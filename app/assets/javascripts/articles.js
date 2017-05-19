@@ -37,7 +37,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
           for (var i = 0; i < this.userKeywords.length; i++) {
             if (article.title.toLowerCase().indexOf(this.userKeywords[i].toLowerCase()) !== -1) {
               isValidArticle = false;
-              this.removedArticles.push(article);
+              if (this.checkedSources.indexOf(article.source) !== -1) {
+                this.removedArticles.push(article);
+              }
             }
           }
 

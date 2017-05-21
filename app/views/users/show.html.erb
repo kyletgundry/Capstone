@@ -1,9 +1,7 @@
+<body class="user_show_page">
+  
 <p></p>
-<div><a class="btn btn-default" href="/">Home</a></div>
-
-<p></p>
-
-<h1>Profile:</h1>
+<div><a style="float:right;margin-top: 50px;" href="/">Home</a></div>
 
 <h3>Hey, <%= @user.first_name %>....</h3>
 
@@ -12,32 +10,51 @@
 
 <h4>Email: <%= @user.email %></h4>
 
+<br />
+<ul>
+<h3 style="margin-left: -43px;">Keywords Saved:</h3>
+
+<% @user.keywords.each do |keyword| %>
+  <li style="float:left;"><%= keyword.keyword.capitalize %></li>
+<%= form_tag "/keywords/#{keyword.id}", method: :delete do %>
+    <button style="border:none;background: white;"><span style="float:left; background: white;margin-left: 15px;" class="glyphicon glyphicon-trash"></span></button>
+  <% end %>
+<% end %>
+</ul>
+
+<br />
+
+<h3>Favorite Articles Saved:</h3>
+<div class="row">
+  <% @user.favorites.each do |favorite| %>
+    <div class="col-md-4">
+      <div class="well" id="user-favorites">
+        <a href="<%= favorite.url %>"><img style="width: 100%;" src="<%= favorite.image %>" alt=""></a>
+        <h4><%= favorite.title %></h4>
+          <%= form_tag "/favorites/#{favorite.id}", method: :delete do %>
+            <input type="submit" value="Remove Favorite">
+          <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
 <p></p>
 
 <h3>Sources Saved:</h3>
-
-<% @user.sources.each do |source| %>
-<h4><%= source.source %></h4>
-<% end %>
-
-<h3>Favorite Articles Saved:</h3>
-
-<% @user.favorites.each do |favorite| %>
-  <a href="<%= favorite.url %>"><%= favorite.url %></a>
-  <%= form_tag "/favorites/#{favorite.id}", method: :delete do %>
-    <input type="submit" value="Remove Favorite">
+<div class="row">
+  <% @user.sources.each do |source| %>
+    <div class="col-md-3">
+      <div class="well" id="user-sources">
+        <img style="width: 100%;" src="<%= source.image %>" alt="">
+        <h4><%= source.source %></h4>
+      </div>
+    </div>
   <% end %>
-<% end %>
+</div>
 
 
-<h3>Keywords Saved:</h3>
 
-<% @user.keywords.each do |keyword| %>
-<span>
-  <h5><%= keyword.keyword %></h5>
-<%= form_tag "/keywords/#{keyword.id}", method: :delete do %>
-    <input class="deletebutton" type="submit" value="X">
-  <% end %>
-<% end %>
-</span>
+
+
+</body>
 

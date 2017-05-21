@@ -50,8 +50,9 @@
         <div class="container">
 
           <!-- Removed Articles -->
-
             <!-- Button trigger modal -->
+          <% if current_user %>
+          
               <button  data-target="#myModal" data-toggle="modal" type="button" v-on:click="showRemovedList">
                 <span v-if="showRemovedList">Show {{removedArticles.length}} removed articles</span>
                 <!-- <span v-if="showRemovedList">Hide {{removedArticles.length}} removed articles</span> -->
@@ -69,7 +70,7 @@
                       <div v-if="showRemovedList" v-for="article in removedArticles" class="well" style="background:white;">
                         <a v-bind:href="article.url" class="image-popup fh5co-board-img"><img style="width:100%;" v-bind:src="article.urlToImage" alt=""></a>
                                 
-                      <div class="label label-default" style="align-items: left;">{{article.source}}</div>
+                  <div class="label label-default" style="align-items: left;">{{article.source}}</div>
 
 
                       <% if current_user %>
@@ -94,7 +95,7 @@
               </div>
             </div>
 
-
+            <% end %>
 
           <!-- Filtered Articles -->
 

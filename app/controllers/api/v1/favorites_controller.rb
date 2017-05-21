@@ -9,6 +9,8 @@ class Api::V1::FavoritesController < ApplicationController
   def create
     @favorite = Favorite.new(
       url: params[:url],
+      image: params[:image],
+      title: params[:title],
       user_id: current_user.id
       )
     # if @favorite.save

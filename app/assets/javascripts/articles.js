@@ -111,11 +111,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
       toggleFavorited: function(inputArticle) {
         inputArticle.favorited = !inputArticle.favorited;
         console.log("Input Favorite: ", inputArticle);
-        var params = {url: inputArticle.url};
-        console.log("Favorite Article URL: ", params);
+        var params = {url: inputArticle.url, image: inputArticle.urlToImage, title: inputArticle.title};
+        console.log("Favorite Article: ", params);
         if (inputArticle.favorited) {
           $.post("/api/v1/favorites", params, function(responseData) {
             this.favorites.push(responseData);
+            console.log("Response Data:  ", responseData);
           }.bind(this));
         } else {
           $.post("/api/v1/favorites/delete", params, function(responseData) {
@@ -159,6 +160,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log(article.phoneNumberField);
       }
 
+    }
+  });
+});
+      
+
+
+
+
+
       // createKeyword: function() { 
       //   var params = {keyword: this.newKeyword};
       //   console.log("keyword: ", params);
@@ -169,6 +179,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
       //     this.newKeyword = "";
       //   }.bind(this));
       // }
-    }
-  });
-});

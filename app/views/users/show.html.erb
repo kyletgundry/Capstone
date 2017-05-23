@@ -4,15 +4,16 @@
 <div><a style="float:right;margin-top: 50px;" href="/">Home</a></div>
 
 <h3>Hey, <%= @user.first_name %>....</h3>
+<br />
 
-<img src="<%= @user.image %>" alt="">
-<p></p>
+<img style="width: 150px; height: 150px;" src="<%= @user.image %>" alt="">
+<br />
 
 <h4>Email: <%= @user.email %></h4>
-
 <br />
+
+<h3>Keywords saved:</h3>
 <ul>
-<h3 style="margin-left: -43px;">Keywords Saved:</h3>
 
 <% @user.keywords.each do |keyword| %>
   <li style="float:left;"><%= keyword.keyword.capitalize %></li>
@@ -24,7 +25,7 @@
 
 <br />
 
-<h3>Favorite Articles Saved:</h3>
+<h3>Articles Favorited:</h3>
 <div class="row">
   <% @user.favorites.each do |favorite| %>
     <div class="col-md-4">

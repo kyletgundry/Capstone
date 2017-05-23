@@ -51,14 +51,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log("Articles displaying: ", displayedArticles.length);
         this.totalNumberArticles = displayedArticles;
         
-        var sorted = displayedArticles.sort(function(article1, article2) {
-          if (this.sortAscending) {
+        var validArticles = displayedArticles.filter(function(article) {
+          return article[this.sortAttribute] !== null;
+        }.bind(this));
+        var invalidArticles = displayedArticles.filter(function(article) {
+          return article[this.sortAttribute] === null;
+        }.bind(this));
+        var sorted = validArticles.sort(function(article1, article2) {
+          if (!this.sortAscending) {
             return article1[this.sortAttribute].localeCompare(article2[this.sortAttribute]);
           } else {
             return article2[this.sortAttribute].localeCompare(article1[this.sortAttribute]);
           }
         }.bind(this));
-        return sorted;
+        return sorted.concat(invalidArticles);
+
+        // var sorted = displayedArticles.sort(function(article1, article2) {
+        //   if (article1[this.sortAttribute] !== null && article2[this.sortAttribute] !== null) {
+        //     if (!this.sortAscending) {
+        //       return article1[this.sortAttribute].localeCompare(article2[this.sortAttribute]);
+        //     } else {
+        //       return article2[this.sortAttribute].localeCompare(article1[this.sortAttribute]);
+        //     }
+        //   }
+        // }.bind(this));
+        // return sorted;
       }
     },
     mounted: function() {
@@ -141,12 +158,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return moment(date).format('MMMM Do YYYY, h:mm a');
       },
       setSortAttribute: function(inputAttribute) {
+        console.log("Data: ", inputAttribute);
         if (inputAttribute === this.sortAttribute) {
           this.sortAscending = !this.sortAscending;
         } else {
           this.sortAscending = true;
         }
         this.sortAttribute = inputAttribute;
+        console.log("Sort Attribute: ", this.sortAttribute);
       },
       sendText: function(inputArticle) {
         var params = { phone_number: inputArticle.phoneNumber, article_url: inputArticle.url };

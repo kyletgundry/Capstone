@@ -1,5 +1,6 @@
 <div class="articles">
 
+
     <div id="fh5co-offcanvass" style="overflow: scroll;">
         <a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
       <% if current_user %>
@@ -16,6 +17,7 @@
         <h1 class="fh5co-logo"><a class="navbar-brand" href="/">Fltr</a></h1>
         <div v-for="source in sources">{{ source.source }} <input type="checkbox" :value="source.source" v-model="checkedSources" v-on:click="createSource(source)"></div>
     </div>
+
     <div id="fh5co-header" role="banner">
       <div class="container">
         <div class="row">
@@ -27,37 +29,41 @@
       </div>
     </div>
 
-<% if current_user %>
-  <%= form_tag "/articles/keyword/create", method: :post do %>
-    <input type="text" placeholder="Remove articles..." name="keyword" style="float:left;">
-    <input type="submit" value="Remove" style="float:left;">
+  <% if current_user %>
+    <%= form_tag "/articles/keyword/create", method: :post do %>
+      <input type="text" placeholder="Remove articles..." name="keyword" style="float:left;">
+      <input type="submit" value="Remove" style="float:left;">
+    <% end %>
   <% end %>
-<% end %>
+
+  <button v-on:click="setSortAttribute('publishedAt')" style="float:left;margin-left: 50px;">Order by Date</button>
+
+  <button v-on:click="setSortAttribute('source')"  style="float:left;margin-left: 5px;">Order by Source</button>
+
+  <input style="float:left;margin-left: 100px;padding-left: 50px;padding-right: 50px;" id="search" name="search" type="text" placeholder="Find Articles with title..." v-model="articleTitleFilter">
 
 
-<button v-on:click="setSortAttribute('title')" style="float:left;margin-left: 50px;">Order by Title</button>
+  <% if current_user %>
+    <h6 style="text-align: right;">Total articles showing: {{ totalNumberArticles.length }}</h6>
+    <h6 style="text-align: right;">Total articles removed: {{ removedArticles.length }}</h6>
+  <% end %>
 
-<button v-on:click="setSortAttribute('source')"  style="float:left;margin-left: 5px;">Order by Source</button>
 
-<input style="float:left;margin-left: 100px;padding-left: 50px;padding-right: 50px;" id="search" name="search" type="text" placeholder="Find Articles with title..." v-model="articleTitleFilter">
 
-<% if current_user %>
-  <h6 style="text-align: right;">Total articles showing: {{ totalNumberArticles.length }}</h6>
-  <h6 style="text-align: right;">Total articles removed: {{ removedArticles.length }}</h6>
-<% end %>
-
-    <div id="fh5co-main">
-        <div class="container">
+  <div id="fh5co-main">
+    <div class="container">
 
           <!-- Removed Articles -->
             <!-- Button trigger modal -->
           <% if current_user %>
-          
+
               <button  data-target="#myModal" data-toggle="modal" type="button" v-on:click="showRemovedList">
                 <span v-if="showRemovedList">Show {{removedArticles.length}} removed articles</span>
                 <!-- <span v-if="showRemovedList">Hide {{removedArticles.length}} removed articles</span> -->
               </button>
 
+          <% end %>
+          
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
               <div class="modal-dialog" role="document">
@@ -74,15 +80,14 @@
 
 
                       <% if current_user %>
-                        <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;float:left;margin-left:0px;">
-                                  
+                        <button class="btn btn-default btn-sm" v-on:click="toggleFavorited(article)" style="border:none;float:left;margin-left:0px;">  
                           <span v-if="article.favorited" class="glyphicon glyphicon-heart"></span>
                           <span v-if="!article.favorited" class="glyphicon glyphicon-heart-empty"></span>
-
                         </button>
                       <% end %>
 
                       <span style="font-size:10px; margin-left:10px;text-align: right;">{{ moment(article.publishedAt) }}</span>
+
                       <div class="fh5co-desc">{{ article.title }}</div>
                       </div>
                     </div>
@@ -91,11 +96,11 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                   </div> -->
+                  </div>
                 </div>
               </div>
             </div>
 
-            <% end %>
 
           <!-- Filtered Articles -->
 

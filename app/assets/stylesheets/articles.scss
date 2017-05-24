@@ -160,13 +160,15 @@
   transform: scale(1.1);
 }
 
-.loader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
-}
+// .loader {
+//   position: fixed;
+//   left: 0px;
+//   top: 0px;
+//   width: 100%;
+//   height: 100%;
+//   z-index: 9999;
+//   background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+// }
+
+.js div#preloader { position: fixed; left: 0; top: 0px; z-index: 999; width: 100%; height: 100%; overflow: visible; background: transparent url('https://media4.giphy.com/media/PXqNXjkTmEfRK/giphy.gif?response_id=5924d038a14a95f0b4d68617') no-repeat center center; }
 

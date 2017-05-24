@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   Vue.component('modal', {
     template: '#modal-template'
   });
+  Vue.component('modal2', {
+    template: '#modal-template'
+  });
 
   var app = new Vue({
     el: ".articles",
@@ -57,6 +60,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var invalidArticles = displayedArticles.filter(function(article) {
           return article[this.sortAttribute] === null;
         }.bind(this));
+
+        if (displayedArticles.length !== 0) {
+          $('#modal2').modal('hide');
+        }
         var sorted = validArticles.sort(function(article1, article2) {
           if (!this.sortAscending) {
             return article1[this.sortAttribute].localeCompare(article2[this.sortAttribute]);
@@ -79,6 +86,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     },
     mounted: function() {
+      
+      $(window).load(function() {
+        $('#modal2').modal('show');
+      });
       // var currentUser = gon.current_user;
       console.log("info:", gon.current_user);
       

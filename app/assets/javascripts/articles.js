@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       totalNumberArticles: [],
       sortAscending: true,
       showRemovedList: true,
-      showModal: false
+      showModal: false,
     },
     computed: {
       filteredArticles: function() {
@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             return article2[this.sortAttribute].localeCompare(article1[this.sortAttribute]);
           }
         }.bind(this));
+
         return sorted.concat(invalidArticles);
 
         // var sorted = displayedArticles.sort(function(article1, article2) {
@@ -190,7 +191,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
         console.log(article.phoneNumberField);
       }
 
-    }
+    },
+    // watch: {
+    //   articleTitleFilter: function(val) {
+    //     salvattore.recreateColumns(document.getElementById("fh5co-board"));
+    //     console.log('hello', val);
+    //   }
+    // }
   });
 });
       
